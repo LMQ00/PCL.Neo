@@ -1,6 +1,8 @@
 ## 官方 QQ 交流 1 群：966504100
 ## 官方 QQ 交流 2 群：1056704950
 
+##由于不可抗力的影响，目前该项目暂缓开发
+
 <div align=center>
 
 <img alt="Logo" src="/Icon.svg" width="256">
