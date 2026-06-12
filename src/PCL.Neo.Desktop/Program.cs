@@ -1,6 +1,6 @@
 ﻿using Avalonia;
 
-namespace PCL.Neo.Bootstrap;
+namespace PCL.Neo.Desktop;
 
 sealed class Program
 {

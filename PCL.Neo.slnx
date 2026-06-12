@@ -1,4 +1,4 @@
 <Solution>
-  <Project Path="src/PCL.Neo.Bootstrap/PCL.Neo.Bootstrap.csproj" />
+  <Project Path="src/PCL.Neo.Desktop/PCL.Neo.Desktop.csproj" />
   <Project Path="src/PCL.Neo/PCL.Neo.csproj" />
 </Solution>
