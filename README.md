@@ -16,7 +16,7 @@
 
 ## 特色
 
-- **跨平台**：借助于强大的 **Avalonia** 框架，你可以在 Windows、Linux 和 macOS 上体验 PCL.Neo！
+- **跨平台**：借助于强大的 **Avalonia 12** 框架，你可以在 Windows、Linux 和 macOS 上体验 PCL.Neo！
 - **多种架构支持**：无论是 x64、x86、ARM64 还是 Loongarch64、RiscV64，PCL.Neo 都能轻松应对。
 - **像素级还原**：PCL.Neo 的界面，功能与原版 PCL 几乎一致。
 - **原生运行**：PCL.Neo 是原生自绘控件，速度自然快！
