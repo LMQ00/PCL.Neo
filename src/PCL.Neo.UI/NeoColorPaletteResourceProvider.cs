@@ -13,7 +13,8 @@ public class NeoColorPaletteResourceProvider : ResourceProvider
     public const string AccentLight2Key = "NeoSystemAccentColorLight2";
     public const string AccentLight3Key = "NeoSystemAccentColorLight3";
     
-    private NeoColorPalette _palette;
+    private NeoColorPalette _palette = null!;
+    private NeoTheme? _theme;
     
     public override bool HasResources => true;
     
@@ -39,5 +40,31 @@ public class NeoColorPaletteResourceProvider : ResourceProvider
         }
 
         return value != null;
+    }
+    
+    protected override void OnAddOwner(IResourceHost owner)
+    {
+        base.OnAddOwner(owner);
+
+        _theme = NeoTheme.Current ?? throw new InvalidOperationException("NeoTheme.Current is null");
+        _theme.Refreshed += CurrentOnRefreshed;
+        _palette = _theme.ColorPalette;
+    }
+
+    protected override void OnRemoveOwner(IResourceHost owner)
+    {
+        if (_theme is not null)
+        {
+            _theme.Refreshed -= CurrentOnRefreshed;
+            _theme = null;
+        }
+        
+        base.OnRemoveOwner(owner);
+    }
+    
+    private void CurrentOnRefreshed(object? sender, RefreshedEventArgs e)
+    {
+        _palette = e.Palette;
+        Owner?.NotifyHostedResourcesChanged(ResourcesChangedEventArgs.Create());
     }
 }
