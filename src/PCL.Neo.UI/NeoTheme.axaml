@@ -1,0 +1,14 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="PCL.Neo.UI.NeoTheme"
+        xmlns:n="using:PCL.Neo.UI">
+    <Styles.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <n:NeoColorPaletteResourceProvider />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Styles.Resources>
+    
+    <StyleInclude Source="Styles/Controls/NeoControls.axaml" />
+</Styles>
