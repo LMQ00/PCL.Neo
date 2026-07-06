@@ -1,11 +1,11 @@
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
-using Avalonia.Styling;
-using PCL.Neo.UI.Helpers;
+using PCL.Neo.UI.Media;
+using PCL.Neo.UI.Styles;
 
 namespace PCL.Neo.UI;
 
-public class NeoTheme : Styles
+public class NeoTheme : Avalonia.Styling.Styles
 {
     public event EventHandler<RefreshedEventArgs>? Refreshed;
     

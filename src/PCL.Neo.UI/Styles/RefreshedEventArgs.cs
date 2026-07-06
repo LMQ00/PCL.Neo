@@ -1,4 +1,4 @@
-namespace PCL.Neo.UI;
+namespace PCL.Neo.UI.Styles;
 
 public class RefreshedEventArgs(NeoColorPalette palette) : EventArgs
 {
