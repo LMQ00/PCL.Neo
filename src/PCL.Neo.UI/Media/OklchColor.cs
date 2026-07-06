@@ -28,15 +28,20 @@ public readonly struct OklchColor : IEquatable<OklchColor>
         A = oklch.A;
     }
 
-    public static Color ToRgb(OklchColor oklch)
+    public Color ToRgb()
     {
-        var (oklabL, oklabA, oklabB) = ColorUtils.OklchToOklab(oklch.L, oklch.C, oklch.H);
+        return ToRgb(L, C, H, A);
+    }
+
+    public static Color ToRgb(double l, double c, double h, double a = 1)
+    {
+        var (oklabL, oklabA, oklabB) = ColorUtils.OklchToOklab(l, c, h);
         var (linearR, linearG, linearB) = ColorUtils.OklabToLinearRgb(oklabL, oklabA, oklabB);
         var (r, g, b) = ColorUtils.LinearRgbToRgb(linearR, linearG, linearB);
         
-        var a = (byte)Math.Round(oklch.A * 255.0);
+        var rgbA = (byte)Math.Round(a * 255.0);
         
-        return Color.FromArgb(a, r, g, b);
+        return Color.FromArgb(rgbA, r, g, b);
     }
     
     public bool Equals(OklchColor other) =>
