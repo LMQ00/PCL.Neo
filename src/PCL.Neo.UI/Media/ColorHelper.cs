@@ -1,6 +1,7 @@
 using Avalonia.Media;
+using PCL.Neo.UI.Styles;
 
-namespace PCL.Neo.UI.Helpers;
+namespace PCL.Neo.UI.Media;
 
 public static class ColorHelper
 {

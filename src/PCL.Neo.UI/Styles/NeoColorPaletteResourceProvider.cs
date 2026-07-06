@@ -1,7 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Styling;
 
-namespace PCL.Neo.UI;
+namespace PCL.Neo.UI.Styles;
 
 public class NeoColorPaletteResourceProvider : ResourceProvider
 {

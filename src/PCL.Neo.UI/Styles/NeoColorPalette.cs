@@ -1,6 +1,6 @@
 using Avalonia.Media;
 
-namespace PCL.Neo.UI;
+namespace PCL.Neo.UI.Styles;
 
 public record NeoColorPalette
 {
