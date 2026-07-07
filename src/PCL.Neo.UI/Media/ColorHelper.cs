@@ -8,16 +8,20 @@ public static class ColorHelper
 {
     public static NeoColorPalette GenerateColorPalette(Color color)
     {
+        var oklch = color.ToOklch();
+        
         return new NeoColorPalette
         {
             Accent = color,
-            AccentLight1 = Lighten(color, 0.1),
-            AccentLight2 = Lighten(color, 0.15),
-            AccentLight3 = Lighten(color, 0.2),
-            AccentDark1 = Darken(color, 0.1),
-            AccentDark2 = Darken(color, 0.15),
-            AccentDark3 = Darken(color, 0.2)
+            AccentLight1 = Lighten(color, Lerp(0, 0.95 - oklch.L, 0.2)),
+            AccentLight2 = Lighten(color, Lerp(0, 0.95 - oklch.L, 0.4)),
+            AccentLight3 = Lighten(color, Lerp(0, 0.95 - oklch.L, 0.6)),
+            AccentDark1 = Darken(color, Lerp(0, oklch.L - 0.15, 0.2)),
+            AccentDark2 = Darken(color, Lerp(0, oklch.L - 0.15, 0.4)),
+            AccentDark3 = Darken(color, Lerp(0, oklch.L - 0.15, 0.6))
         };
+        
+        double Lerp(double a, double b, double t) => a + (b - a) * t;
     }
     
     /// <summary>
