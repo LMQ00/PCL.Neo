@@ -1,4 +1,5 @@
 using Avalonia.Media;
+using PCL.Neo.UI.Media.Primitives;
 using PCL.Neo.UI.Styles;
 
 namespace PCL.Neo.UI.Media;
@@ -10,12 +11,12 @@ public static class ColorHelper
         return new NeoColorPalette
         {
             Accent = color,
-            AccentLight1 = Lighten(color, 0.2),
-            AccentLight2 = Lighten(color, 0.4),
-            AccentLight3 = Lighten(color, 0.6),
-            AccentDark1 = Darken(color, 0.2),
-            AccentDark2 = Darken(color, 0.4),
-            AccentDark3 = Darken(color, 0.6)
+            AccentLight1 = Lighten(color, 0.1),
+            AccentLight2 = Lighten(color, 0.15),
+            AccentLight3 = Lighten(color, 0.2),
+            AccentDark1 = Darken(color, 0.1),
+            AccentDark2 = Darken(color, 0.15),
+            AccentDark3 = Darken(color, 0.2)
         };
     }
     
@@ -27,14 +28,10 @@ public static class ColorHelper
     /// <returns>变亮后的颜色。</returns>
     public static Color Lighten(Color color, double amount)
     {
-        // 转换为 HSL 空间
-        var hsl = color.ToHsl();
-
-        // 线性相加
-        var newL = Math.Clamp(hsl.L + amount, 0.0, 1.0);
-
-        // 转回 RGB
-        return new HslColor(hsl.A, hsl.H, hsl.S, newL).ToRgb();
+        if (amount == 0.0) return color;
+        amount = Math.Clamp(amount, 0.0, 1.0);
+        
+        return LightenCore(color, amount);
     }
     
     /// <summary>
@@ -45,6 +42,54 @@ public static class ColorHelper
     /// <returns>变暗后的颜色。</returns>
     public static Color Darken(Color color, double amount)
     {
-        return Lighten(color, -amount);
+        if (amount == 0.0) return color;
+        amount = Math.Clamp(amount, 0.0, 1.0);
+        
+        return LightenCore(color, -amount);
+    }
+
+    private static Color LightenCore(Color color, double amount)
+    {
+        // 转换为 OKLCH 空间
+        var oklch = color.ToOklch();
+
+        // 线性相加
+        var newL = Math.Clamp(oklch.L + amount, 0.0, 1.0);
+
+        return GamutMappingToSrgb(new OklchColor(newL, oklch.C, oklch.H, oklch.A)).ToRgb();
+        
+        OklchColor GamutMappingToSrgb(OklchColor oklchColor)
+        {
+            var lowC = 0.0;
+            var midC = 0.0;
+            var highC = oklchColor.C;
+            for (var i = 0; i < 20; i++)
+            {
+                midC = (lowC + highC) / 2.0;
+                
+                var (linearR, linearG, linearB) = OklchToLinearRgb(oklchColor.L, midC, oklchColor.H);
+                if (IsInSrgb(linearR, linearG, linearB))
+                {
+                    lowC = midC;
+                }
+                else
+                {
+                    highC = midC;
+                }
+            }
+
+            return new OklchColor(oklchColor.L, midC, oklchColor.H, oklchColor.A);
+        }
+
+        (double r, double g, double b) OklchToLinearRgb(double l, double c, double h)
+        {
+            var (oklabL, oklabA, oklabH) = ColorUtils.OklchToOklab(l, c, h);
+            return ColorUtils.OklabToLinearRgb(oklabL, oklabA, oklabH);
+        }
+        
+        bool IsInSrgb(double r, double g, double b) => 
+            r is >= 0 and <= 1 &&
+            g is >= 0 and <= 1 &&
+            b is >= 0 and <= 1;
     }
 }
