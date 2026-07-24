@@ -24,4 +24,4 @@
 
 ## 协议声明
 
-PCL.Neo.Desktop 使用[与主线相同的指南](https://github.com/Meloong-Git/PCL/blob/main/LICENCE)，其他部分均使用 MIT License。
+PCL.Neo.Desktop 与 PCL.Neo 使用[与主线相同的指南](https://github.com/Meloong-Git/PCL/blob/main/LICENCE)，其他部分均使用 MIT License。
