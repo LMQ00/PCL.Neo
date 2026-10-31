@@ -6,6 +6,8 @@ on:
         branches: ["main"]
     pull_request:
         branches: ["main"]
+    release:
+        types: [created]
 
 jobs:
     build-AppImage:
@@ -44,6 +46,15 @@ jobs:
                 name: linux.x64
                 path: |
                     PCL.Neo/Deploy/OUT/PCL.Neo.linux.x64.AppImage
+            - name: Upload to Release
+              if: github.event_name == 'release'
+              uses: softprops/action-gh-release@v2
+              with:
+                files: |
+                    PCL.Neo/Deploy/OUT/PCL.Neo.linux.x64.AppImage
+                    PCL.Neo/Deploy/OUT/PCL.Neo.linux.arm64.AppImage
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     build-MacOsApp:
         runs-on: ubuntu-22.04
         steps:
@@ -80,6 +91,15 @@ jobs:
                     name: osx.mac.x64
                     path: |
                         mac-publish-assets/x64/PCL.Neo.osx.mac.x64.app.zip
+            - name: Upload to Release
+              if: github.event_name == 'release'
+              uses: softprops/action-gh-release@v2
+              with:
+                files: |
+                    mac-publish-assets/x64/PCL.Neo.osx.mac.x64.app.zip
+                    mac-publish-assets/arm64/PCL.Neo.osx.mac.arm64.app.zip
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     build-WinExe:
         runs-on: ubuntu-22.04
         steps:
